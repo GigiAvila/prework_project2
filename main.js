@@ -139,7 +139,7 @@ searchBar.className = "searchbar_input";
 searchBar.type = "text";
 searchBar.id = "searchBar"
 searchBar.placeholder = "Busca tu producto aquí"
-searchBarImg.src = "./Assets/loupe.png";
+searchBarImg.src = "./Assets/loupe1.png";
 titleFilter.textContent = "Filtro de categoría";
 searchBarLabel.textContent = "Filtra por nombre";
 searchBarLabel.setAttribute("for", "searchBar");
