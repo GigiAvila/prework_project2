@@ -119,7 +119,9 @@ const PRODUCTS = [
 const aside = document.querySelector("aside");
 aside.innerHTML = " ";
 
+
 const filterCategoryWrapper = document.createElement("div");
+const searchBarPriceFilterandButtonContainer = document.createElement("div");
 
 const searchBarContainer = document.createElement("div");
 const searchBarLabel = document.createElement("label");
@@ -132,6 +134,7 @@ const titleFilter = document.createElement("h3");
 divCategoriesFilter.className = "categories_filter";
 titleFilter.className = "title_category_filter";
 
+searchBarPriceFilterandButtonContainer.className = "others_filter_wrapper"
 searchBarContainer.className = "searchbar_container";
 searchBarWrapper.className = "searchbar_wrapper";
 searchBarLabel.className = "searchbar_label";
@@ -156,7 +159,7 @@ const inputMaxPriceFilter = document.createElement('input');
 const minCurrencySimbol = document.createElement('span');
 const maxCurrencySimbol = document.createElement('span');
 
-
+const removeFilterButton = document.createElement('button');
 
 divPriceFilter.id = "pricefilter_div"
 filterCategoryWrapper.className = "filtercategory_wrapper"
@@ -170,6 +173,8 @@ inputMinPriceFilter.id = "minprice_input"
 inputMaxPriceFilter.id = "maxprice_input"
 minPriceDiv.id = "minprice_div"
 maxPriceDiv.id = "maxprice_div"
+
+removeFilterButton.id = 'remove-filter-button';
 
 inputMinPriceFilter.type = "number";
 inputMaxPriceFilter.type = "number";
@@ -188,10 +193,14 @@ priceFilterTitle.textContent = "Filtro por precio";
 minPriceFilterLabel.textContent = "Precio Mínimo";
 maxPriceFilterLabel.textContent = "Precio Máximo";
 
+removeFilterButton.textContent = "Borrar filtros";
+
 
 aside.appendChild(filterCategoryWrapper)
-aside.appendChild(searchBarContainer);
-aside.appendChild(divPriceFilter);
+aside.appendChild(searchBarPriceFilterandButtonContainer)
+searchBarPriceFilterandButtonContainer.appendChild(searchBarContainer);
+searchBarPriceFilterandButtonContainer.appendChild(divPriceFilter);
+searchBarPriceFilterandButtonContainer.appendChild(removeFilterButton);
 filterCategoryWrapper.appendChild(titleFilter);
 filterCategoryWrapper.appendChild(divCategoriesFilter);
 searchBarContainer.appendChild(searchBarLabel);
@@ -209,12 +218,12 @@ minCurrencySimbol.appendChild(inputMinPriceFilter);
 maxCurrencySimbol.appendChild(inputMaxPriceFilter);
 
 
-const removeFilterButton = document.createElement('button');
 
-removeFilterButton.id = 'remove-filter-button';
-removeFilterButton.textContent = "Borrar filtros";
 
-aside.appendChild(removeFilterButton);
+
+
+
+
 
 
 
