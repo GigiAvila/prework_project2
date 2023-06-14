@@ -1,3 +1,4 @@
+// SETUP
 
 const main = document.querySelector("main");
 main.innerHTML = "";
@@ -114,8 +115,112 @@ const PRODUCTS = [
 ]
 
 
+
+const aside = document.querySelector("aside");
+aside.innerHTML = " ";
+
+const filterCategoryWrapper = document.createElement("div");
+
+const searchBarContainer = document.createElement("div");
+const searchBarLabel = document.createElement("label");
+const searchBarWrapper = document.createElement("div");
+const searchBar = document.createElement("input");
+const searchBarImg = document.createElement("img");
+const divCategoriesFilter = document.createElement("div");
+const titleFilter = document.createElement("h3");
+
+divCategoriesFilter.className = "categories_filter";
+titleFilter.className = "title_category_filter";
+
+searchBarContainer.className = "searchbar_container";
+searchBarWrapper.className = "searchbar_wrapper";
+searchBarLabel.className = "searchbar_label";
+searchBar.className = "searchbar_input";
+searchBar.type = "text";
+searchBar.id = "searchBar"
+searchBar.placeholder = "Busca tu producto aquí"
+searchBarImg.src = "./Assets/loupe.png";
+titleFilter.textContent = "Filtro de categoría";
+searchBarLabel.textContent = "Filtra por nombre";
+searchBarLabel.setAttribute("for", "searchBar");
+
+
+const divPriceFilter = document.createElement('div');
+const priceFilterTitle = document.createElement('h3')
+const minPriceDiv = document.createElement('div');
+const maxPriceDiv = document.createElement('div');
+const minPriceFilterLabel = document.createElement("label");
+const maxPriceFilterLabel = document.createElement("label");
+const inputMinPriceFilter = document.createElement('input');
+const inputMaxPriceFilter = document.createElement('input');
+const minCurrencySimbol = document.createElement('span');
+const maxCurrencySimbol = document.createElement('span');
+
+
+
+divPriceFilter.id = "pricefilter_div"
+filterCategoryWrapper.className = "filtercategory_wrapper"
+priceFilterTitle.className = "title_price_filter"
+minCurrencySimbol.className = "currency_simbol"
+maxCurrencySimbol.className = "currency_simbol"
+
+minPriceFilterLabel.id = "min_price_label"
+maxPriceFilterLabel.id = "max_price_label"
+inputMinPriceFilter.id = "minprice_input"
+inputMaxPriceFilter.id = "maxprice_input"
+minPriceDiv.id = "minprice_div"
+maxPriceDiv.id = "maxprice_div"
+
+inputMinPriceFilter.type = "number";
+inputMaxPriceFilter.type = "number";
+inputMinPriceFilter.min = "0";
+inputMaxPriceFilter.min = "0";
+inputMinPriceFilter.step = "0.01";
+inputMaxPriceFilter.step = "0.01";
+
+
+minPriceFilterLabel.setAttribute("for", "minprice_div");
+maxPriceFilterLabel.setAttribute("for", "maxprice_div");
+
+minCurrencySimbol.textContent = "€"
+maxCurrencySimbol.textContent = "€"
+priceFilterTitle.textContent = "Filtro por precio";
+minPriceFilterLabel.textContent = "Precio Mínimo";
+maxPriceFilterLabel.textContent = "Precio Máximo";
+
+
+aside.appendChild(filterCategoryWrapper)
+aside.appendChild(searchBarContainer);
+aside.appendChild(divPriceFilter);
+filterCategoryWrapper.appendChild(titleFilter);
+filterCategoryWrapper.appendChild(divCategoriesFilter);
+searchBarContainer.appendChild(searchBarLabel);
+searchBarContainer.appendChild(searchBarWrapper);
+searchBarWrapper.appendChild(searchBar);
+searchBarWrapper.appendChild(searchBarImg);
+divPriceFilter.appendChild(priceFilterTitle);
+divPriceFilter.appendChild(minPriceDiv);
+divPriceFilter.appendChild(maxPriceDiv);
+minPriceDiv.appendChild(minPriceFilterLabel);
+maxPriceDiv.appendChild(maxPriceFilterLabel);
+minPriceDiv.appendChild(minCurrencySimbol);
+maxPriceDiv.appendChild(maxCurrencySimbol);
+minCurrencySimbol.appendChild(inputMinPriceFilter);
+maxCurrencySimbol.appendChild(inputMaxPriceFilter);
+
+
+const removeFilterButton = document.createElement('button');
+
+removeFilterButton.id = 'remove-filter-button';
+removeFilterButton.textContent = "Borrar filtros";
+
+aside.appendChild(removeFilterButton);
+
+
+
+
 // CARTAS
-const paintcards = () => {
+const paintCards = () => {
 
   for (const product of PRODUCTS) {
     const card = document.createElement("div");
@@ -138,18 +243,20 @@ const paintcards = () => {
     buyButton.className = "boton_compra"
 
 
+    const productPrice = product.price;
+    const productPriceFormatted = new Intl.NumberFormat('es-ES', {
+      style: 'currency',
+      currency: 'EUR',
+    }).format(productPrice);
+
     image.src = product.image;
     name.textContent = product.name;
     category.textContent = product.category
     seller.textContent = product.seller;
-    price.textContent = `${product.price} euros`;
+    price.textContent = productPriceFormatted;
     organic.textContent = product.organic ? "ORGANICO 🌱" : " ";
     buyButton.textContent = "Comprar";
 
-    buyButton.addEventListener("click", () => {
-      addTrolley(product); // product elemento que quiero modificar
-
-    })
 
     main.appendChild(card);
     card.appendChild(imgWrp);
@@ -163,47 +270,11 @@ const paintcards = () => {
   }
 }
 
-paintcards();
+paintCards();
 
 
 
-
-//ASIDE DISEÑO
-const aside = document.querySelector("aside");
-aside.innerHTML = " ";
-
-const searchBarContainer = document.createElement("div");
-const searchBarLabel = document.createElement("label");
-const searchBarWrapper = document.createElement("div");
-const searchBar = document.createElement("input");
-const searchBarImg = document.createElement("img");
-const divCategoriesFilter = document.createElement("div");
-const titleFilter = document.createElement("h3");
-
-divCategoriesFilter.className = "categories_filter";
-titleFilter.className = "title_filter";
-
-searchBarContainer.className = "searchbar_container";
-searchBarWrapper.className = "searchbar_wrapper";
-searchBarLabel.className = "searchbar_label";
-searchBar.className = "searchbar_input";
-searchBar.type = "text";
-searchBar.id = "searchBar"
-searchBar.placeholder = "Busca tu producto aquí"
-searchBarImg.src = "./Assets/loupe.png";
-titleFilter.textContent = "Filtro de categoría";
-searchBarLabel.textContent = "Filtra por nombre";
-searchBarLabel.setAttribute("for", "searchBar");
-
-
-aside.appendChild(titleFilter);
-aside.appendChild(divCategoriesFilter);
-aside.appendChild(searchBarContainer);
-searchBarContainer.appendChild(searchBarLabel);
-searchBarContainer.appendChild(searchBarWrapper);
-searchBarWrapper.appendChild(searchBar);
-searchBarWrapper.appendChild(searchBarImg);
-
+const cards = document.querySelectorAll('.carta');
 
 // CREA FILTRO CATEGORIA ASIDE
 
@@ -223,31 +294,34 @@ const categoryDisplay = () => {
     checkboxCategory = document.createElement("input");
 
     categoryContainer.className = "category_container";
+    categoryLabel.className = "category_label";
     categoryLabel.textContent = category;
     checkboxCategory.type = "checkbox";
     checkboxCategory.id = `category_checkbox_${i}`;
 
     categoryLabel.setAttribute("for", `category_checkbox_${i}`);
 
+    filterCategoryWrapper.appendChild(divCategoriesFilter)
     divCategoriesFilter.appendChild(categoryContainer);
     categoryContainer.append(categoryLabel);
     categoryContainer.appendChild(checkboxCategory);
 
-    checkboxCategory.addEventListener("change", (e) => paintCategory(e, categoryLabel));
+    checkboxCategory.addEventListener("change", (e) => filterByCategory(e, categoryLabel));
   });
 };
 
 categoryDisplay();
 
-const paintCategory = (e, categoryLabel) => {
+const filterByCategory = (e, categoryLabel) => {
   const selectedCategory = e.target.id;
-  const checkbox = document.getElementById(selectedCategory);
+  const checkboxOfSelectedCategory = document.getElementById(selectedCategory);
 
-  if (checkbox.checked) {
+
+  if (checkboxOfSelectedCategory.checked) {
     categoryLabel.classList.add('selected');
     categoryLabel.style.backgroundColor = '#B2E4DB';
 
-    const cards = document.querySelectorAll('.carta');
+
     cards.forEach((card) => {
       const category = card.querySelector('.categoria').textContent;
       const checkboxId = `category_checkbox_${categories.indexOf(category)}`;
@@ -255,45 +329,44 @@ const paintCategory = (e, categoryLabel) => {
       if (checkboxId !== selectedCategory) {
         card.style.display = 'none';
       } else {
-        card.style.display = 'block';
+        card.style.display = 'flex';
       }
     });
   } else {
     categoryLabel.classList.remove('selected');
     categoryLabel.style.backgroundColor = '';
 
-    const cards = document.querySelectorAll('.carta');
     cards.forEach((card) => {
-      card.style.display = 'block';
+      card.style.display = 'flex';
     });
   }
 };
 
 
 // FILTRO POR NOMBRE 
-const normalizetext = text => text.trim().toLowerCase();
+const normalizeText = text => text.trim().toLowerCase();
 
 
-const searchProducts = () => {
-  const searchInputText = normalizetext(searchBar.value);
+const filterByName = () => {
+  const searchInputText = normalizeText(searchBar.value);
 
   const filteredProducts = PRODUCTS.filter((product) =>
-    normalizetext(product.name).includes(searchInputText)
+    normalizeText(product.name).includes(searchInputText)
   );
 
-  const cards = document.querySelectorAll('.carta');
   let productFound = false;
 
   cards.forEach((card) => {
     const productName = card.querySelector('.nombre').textContent.toLowerCase().trim();
 
-    if (filteredProducts.some((product) => normalizetext(product.name) === productName)) {
-      card.style.display = 'block';
+    if (filteredProducts.some((product) => normalizeText(product.name) === productName)) {
+      card.style.display = 'flex';
       productFound = true;
     } else {
       card.style.display = 'none';
     }
   });
+
   // MENSAJE AUTOMATICO  
   if (productFound === false) {
     const existingMessage = document.querySelector('.no_results_message');
@@ -311,20 +384,22 @@ const searchProducts = () => {
   }
 };
 
+
 const showAllProducts = () => {
-  const cards = document.querySelectorAll('.carta');
+
   const existingMessage = document.querySelector('.no_results_message');
 
   cards.forEach((card) => {
-    card.style.display = 'block';
+    card.style.display = 'flex';
   });
   if (existingMessage) {
     main.removeChild(existingMessage);
   }
 };
 
-// FILTRO BUSQUEDA POR NOMBRE AL HACER CLICK EN LA LUPA
-searchBarImg.addEventListener('click', searchProducts);
+
+
+searchBarImg.addEventListener('click', filterByName);
 
 //PARA QUE VUELVAN LAS CARTAS AL MAIN 
 searchBar.addEventListener('input', () => {
@@ -333,4 +408,73 @@ searchBar.addEventListener('input', () => {
   }
 });
 
+
+// FILTRO POR PRECIO 
+
+const filterByPrice = () => {
+  const minPrice = Number(inputMinPriceFilter.value) || 0;
+  const maxPrice = Number(inputMaxPriceFilter.value) || 1000000;
+
+  console.log(inputMinPriceFilter.value)
+
+  const filteredProducts = PRODUCTS.filter((product) => {
+    return product.price >= minPrice && product.price <= maxPrice;
+  });
+
+
+  let productFound = false;
+
+  cards.forEach((card) => {
+    const productName = card.querySelector('.nombre').textContent.toLowerCase().trim();
+    const productPrice = Number(card.querySelector('.precio').textContent.replace('€', '').replace(',', '.').trim());
+
+    if (filteredProducts.some((product) => product.name.toLowerCase() === productName && product.price === productPrice)) {
+      card.style.display = 'flex';
+      productFound = true;
+    } else {
+      card.style.display = 'none';
+    }
+  });
+
+  if (productFound === false) {
+    const existingMessage = document.querySelector('.no_results_message');
+    if (!existingMessage) {
+      const noResultsMessage = document.createElement('p');
+      noResultsMessage.textContent = 'Lo sentimos, no tenemos productos en ese rango de precios... ¡por ahora!';
+      noResultsMessage.className = 'no_results_message';
+      main.appendChild(noResultsMessage);
+    }
+  } else {
+    const existingMessage = document.querySelector('.no_results_message');
+    if (existingMessage) {
+      main.removeChild(existingMessage);
+    }
+  }
+};
+
+inputMinPriceFilter.addEventListener('input', filterByPrice);
+inputMaxPriceFilter.addEventListener('input', filterByPrice);
+
+
+
+// BOTON RESET FILTERS
+const resetFilters = () => {
+  searchBar.value = '';
+  showAllProducts();
+
+  const categoryCheckboxes = document.querySelectorAll('.category_container input[type="checkbox"]');
+
+  categoryCheckboxes.forEach((checkbox) => {
+    checkbox.checked = false;
+    const categoryLabel = document.querySelector('.category_label');
+    categoryLabel.classList.remove('selected');
+    categoryLabel.style.backgroundColor = '';
+  });
+
+  inputMinPriceFilter.value = '';
+  inputMaxPriceFilter.value = '';
+};
+
+removeFilterButton.addEventListener('click', showAllProducts)
+removeFilterButton.addEventListener('click', resetFilters);
 
